@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'journey.apps.JourneyConfig',
     'ckeditor',
-    'django_rest_passwordreset',
+    
 ]
 
 MIDDLEWARE = [
