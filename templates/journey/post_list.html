@@ -1,0 +1,36 @@
+{% extends "journey/base.html" %}
+{% load static %}
+{% block title %}Posts{% endblock %}
+{% block content %}
+    <style>
+        img.home {
+            height: 300px;
+            object-fit: cover;
+        }
+    </style>
+    {#        Reference - https://startbootstrap.com/template/shop-homepage#}
+    <div class="row gx-4 gx-lg-5 row-cols-1 row-cols-sm-1 row-cols-lg-3 row-cols-xl-3 justify-content-right">
+        {% for post in posts %}
+            <div class="col">
+                <div>
+                    <!-- Post image-->
+                    <a href="{% url 'journey:travelblog_post' post_id=post.pk %}">
+                        <img class="card-img home rounded" src="{{ post.image_url }}" alt="image">
+                    </a>
+                    <!-- Post details-->
+                    <div class="card-body p-3">
+                        <div class="text-left">
+                            <!-- Post title-->
+                            <p class="fs-4">{{ post.title }}</p>
+                            <!-- Post Author-->
+                            <p class="fs-5 fst-italic">{{ post.author }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    <p>You have visited this page {{ num_visits }} time{{ num_visits|pluralize }}.</p>
+    {% include "journey/pagination.html" with page=posts %}
+{% endblock %}
+

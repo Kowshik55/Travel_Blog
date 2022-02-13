@@ -1,0 +1,67 @@
+{% extends "journey/base.html" %}
+{% load static %}
+{% block title %}Posts{% endblock %}
+{% block content %}
+    <style>
+        img {
+            height: 400px;
+            object-fit: cover;
+        }
+    </style>
+    <div class="container">
+        <div>
+            <h2>{{ post.title }}</h2>
+            <h2>{{ post.author.get_full_name }}</h2>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <img src="{{ post.image_url }}" alt="image" >
+            </div>
+            <div  class="col-md-6">
+                <br>
+                <p>Visited Places: {{ post.visited_places }}</p>
+                <p>Visited Date: {{ post.visited_date }}</p>
+                <p>Favorite Place: {{ post.favorite_place }}</p>
+                <p>Address: {{ post.address }}</p>
+                <p>Favorite Activity: {{ post.favorite_activity }}</p>
+                {% if post.author == user %}
+                    <a href="{% url 'journey:post_edit' pk=post.pk %}" class="btn btn-warning">Edit</a>
+                    <a href="{% url 'journey:post_delete' pk=post.pk %}"
+                       onclick="return confirm('Are you sure you want to delete?')"
+                       class="btn btn-danger">Delete</a>
+                {% endif %}
+            </div>
+        </div>
+        <div>
+            <br>
+            <p class="h4">Description</p>
+            <p>{{ post.description|safe }}</p>
+        </div>
+        {% with comments.count as total_comments %}
+            <h5>
+                {{ total_comments }} comment{{ total_comments|pluralize }}
+            </h5>
+        {% endwith %}
+        {% for comment in comments %}
+            <div>
+                <p>
+                    Comment {{ forloop.counter }} by {{ comment.name }}
+                    {{ comment.created }}
+                </p>
+                {{ comment.body|safe }}
+            </div>
+        {% empty %}
+            <p>There are no comments yet.</p>
+        {% endfor %}
+        {% if user.is_authenticated %}
+            <h5>Add a new comment</h5>
+            <form method="post">
+                {{ comment_form.media }}
+                {{ comment_form.as_p }}
+                {% csrf_token %}
+                <p><input type="submit" value="Add comment"></p>
+            </form>
+        {% endif %}
+    </div>
+    <p>You have visited this page {{ num_visits }} time{{ num_visits|pluralize }}.</p>
+{% endblock %}

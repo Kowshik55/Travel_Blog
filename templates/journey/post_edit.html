@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+{% extends 'journey/base.html' %}
+<html lang="en">
+{% block content %}
+    <h1>Edit Post</h1>
+    <form method="POST" enctype="multipart/form-data" class="post-form">
+        {% csrf_token %}
+        {{ form.media }}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-outline-dark">Update</button>
+    </form>
+<p>You have visited this page {{ num_visits }} time{{ num_visits|pluralize }}.</p>
+{% endblock %}
+</html>
+

@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+{% extends 'journey/base.html' %}
+{% block content %}
+    <h1>Add a new post</h1>
+    <div class='form-group'>
+        <form method="POST" enctype='multipart/form-data'>{% csrf_token %}
+            {{ form.as_p }}
+            {{ form.media }}
+            <button type="submit" class="btn btn-outline-dark">Save</button>
+        </form>
+    </div>
+    <p>You have visited this page {{ num_visits }} time{{ num_visits|pluralize }}.</p>
+{% endblock %}
+</html>

@@ -1,0 +1,42 @@
+{% extends 'journey/base.html' %}
+{% block content %}
+    <h1 style="padding-left: -40px; font-weight: bold; margin-top:10px">Comment Details</h1>
+    <section class="py-3">
+        <div>
+            <table class="table table-striped table-hover">
+                <thead>
+                <tr>
+                    <th>Post</th>
+                    <th>Post Author</th>
+                    <th>Commenter</th>
+                    <th>Email</th>
+                    <th>Body</th>
+                    <th>Created Date</th>
+                    <th>Updated Date</th>
+                    <th colspan="3">Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for comment in comments %}
+                    <tr>
+                        <td>{{ comment.post.title }}</td>
+                        <td>{{ comment.post.author }}</td>
+ <td>{{ comment.name }}</td>
+                        <td>{{ comment.email }}</td>
+                        <td>{{ comment.body|safe}}</td>
+                        <td>{{ comment.created}}</td>
+                        <td>{{ comment.updated}}</td>
+                        <td><a href="{% url 'journey:comment_edit' pk=comment.pk %}"
+                               class="btn btn-warning">Edit</a></td>
+                        <td><a href="{% url 'journey:comment_delete' pk=comment.pk %}"
+                               onclick="return confirm('Are you sure you want to delete?')"
+                               class="btn btn-danger">Delete</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <p>You have visited this page {{ num_visits }} time{{ num_visits|pluralize }}.</p>
+    </section>
+{% endblock %}
